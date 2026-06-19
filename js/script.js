@@ -590,4 +590,23 @@
     }
   });
 
+  /* ---------- LIVE PROFILE VIEWS COUNTER ---------- */
+  var visitorCountEl = document.getElementById("visitorCount");
+  if (visitorCountEl) {
+    fetch("https://api.counterapi.dev/v1/shiveshanand09_portfolio/global/up")
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        if (data && typeof data.count === "number") {
+          visitorCountEl.textContent = data.count.toLocaleString() + " views";
+        } else {
+          visitorCountEl.textContent = "Views system active";
+        }
+      })
+      .catch(function () {
+        visitorCountEl.textContent = "Views system active";
+      });
+  }
+
 })();
