@@ -82,7 +82,7 @@
 
   /* ---------- HERO TYPED TEXT ---------- */
   var typedEl = document.getElementById("typed");
-  var roles = ["AI/ML Engineer", "Data Scientist", "RAG & LLM Builder", "Data Pipeline Engineer"];
+  var roles = ["AI/ML Engineer", "Data Scientist", "Data Analyst", "RAG & LLM Builder", "Data Pipeline Engineer"];
 
   if (typedEl) {
     if (reduceMotion) {
@@ -207,7 +207,11 @@
     var themeBtns = themeSwitcher.querySelectorAll(".theme-btn");
     
     // Load persisted theme
-    var savedTheme = localStorage.getItem("portfolioAccentTheme") || "amber";
+    var savedTheme = localStorage.getItem("portfolioAccentTheme") || "cyberpunk";
+    if (savedTheme === "amber") {
+      savedTheme = "cyberpunk";
+      localStorage.setItem("portfolioAccentTheme", "cyberpunk");
+    }
     setActiveTheme(savedTheme);
 
     themeBtns.forEach(function (btn) {
@@ -227,6 +231,30 @@
       });
       // Add new theme class
       htmlElement.classList.add("theme-" + theme);
+    }
+  }
+
+  /* ---------- THEME MODE SWITCHER (DARK / LIGHT / RGB) ---------- */
+  var modeToggle = document.getElementById("modeToggle");
+  var modes = ["dark", "light", "rgb"];
+  
+  if (modeToggle) {
+    var savedMode = localStorage.getItem("portfolioThemeMode") || "dark";
+    setThemeMode(savedMode);
+
+    modeToggle.addEventListener("click", function () {
+      var currentMode = localStorage.getItem("portfolioThemeMode") || "dark";
+      var nextIndex = (modes.indexOf(currentMode) + 1) % modes.length;
+      var nextMode = modes[nextIndex];
+      setThemeMode(nextMode);
+      localStorage.setItem("portfolioThemeMode", nextMode);
+    });
+
+    function setThemeMode(mode) {
+      modes.forEach(function (m) {
+        htmlElement.classList.remove("mode-" + m);
+      });
+      htmlElement.classList.add("mode-" + mode);
     }
   }
 
@@ -376,13 +404,17 @@
         this.baseX = this.x;
         this.baseY = this.y;
         this.density = (Math.random() * 20) + 15;
+        
+        var symbols = ["0", "1", "x", "y", "z", "f(x)", "Σ", "λ", "μ", "σ", "π", "R²", "log", "e", "θ", "AI", "ML", "dx", "dy"];
+        this.char = symbols[Math.floor(Math.random() * symbols.length)];
       }
 
       draw(color) {
-        ctx.fillStyle = color || "rgba(255, 180, 84, 0.2)";
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.fillStyle = color || "rgba(255, 180, 84, 0.35)";
+        ctx.font = (this.size * 3.5 + 6.5) + "px Consolas, Monaco, monospace";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(this.char, this.x, this.y);
       }
 
       update() {
@@ -422,27 +454,140 @@
       }
     }
 
+    function connect(color) {
+      var opacityValue = 1;
+      var lineLimit = 95;
+      var r = 255, g = 180, b = 84;
+      if (color.startsWith("rgba")) {
+        var parts = color.match(/\d+/g);
+        if (parts && parts.length >= 3) {
+          r = parseInt(parts[0], 10);
+          g = parseInt(parts[1], 10);
+          b = parseInt(parts[2], 10);
+        }
+      } else if (color.startsWith("#")) {
+        r = parseInt(color.slice(1, 3), 16);
+        g = parseInt(color.slice(3, 5), 16);
+        b = parseInt(color.slice(5, 7), 16);
+      }
+
+      for (var a = 0; a < particles.length; a++) {
+        for (var b = a + 1; b < particles.length; b++) {
+          var dx = particles[a].x - particles[b].x;
+          var dy = particles[a].y - particles[b].y;
+          var distance = Math.hypot(dx, dy);
+
+          if (distance < lineLimit) {
+            opacityValue = 1 - (distance / lineLimit);
+            ctx.strokeStyle = "rgba(" + r + "," + g + "," + b + "," + (opacityValue * 0.12) + ")";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particles[a].x, particles[a].y);
+            ctx.lineTo(particles[b].x, particles[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       var colorStyle = getComputedStyle(document.documentElement).getPropertyValue('--amber').trim() || "#FFB454";
-      var fillStyleColor = colorStyle;
+      var r = 255, g = 180, b = 84;
       if (colorStyle.startsWith("#")) {
-        var r = parseInt(colorStyle.slice(1, 3), 16);
-        var g = parseInt(colorStyle.slice(3, 5), 16);
-        var b = parseInt(colorStyle.slice(5, 7), 16);
-        fillStyleColor = "rgba(" + r + "," + g + "," + b + ", 0.2)";
+        r = parseInt(colorStyle.slice(1, 3), 16);
+        g = parseInt(colorStyle.slice(3, 5), 16);
+        b = parseInt(colorStyle.slice(5, 7), 16);
+      } else if (colorStyle.startsWith("rgb")) {
+        var parts = colorStyle.match(/\d+/g);
+        if (parts && parts.length >= 3) {
+          r = parseInt(parts[0], 10);
+          g = parseInt(parts[1], 10);
+          b = parseInt(parts[2], 10);
+        }
       }
+      var fillStyleColor = "rgba(" + r + "," + g + "," + b + ", 0.35)";
 
       particles.forEach(function (particle) {
         particle.update();
         particle.draw(fillStyleColor);
       });
+      connect(colorStyle);
       requestAnimationFrame(animate);
     }
 
     resizeCanvas();
     animate();
   }
+
+  /* ---------- PARTY BOMBER CONFETTI POPPER ---------- */
+  function burstConfetti(x, y) {
+    var colors = ["#FFB454", "#4FD1C5", "#818CF8", "#34D399", "#FF6B6B", "#F472B6"];
+    var count = 100;
+    var container = document.body;
+
+    for (var i = 0; i < count; i++) {
+      var el = document.createElement("div");
+      el.className = "confetti-piece";
+      
+      var size = Math.random() * 8 + 5;
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+      el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      if (Math.random() > 0.5) el.style.borderRadius = "50%";
+      
+      el.style.position = "fixed";
+      el.style.left = x + "px";
+      el.style.top = y + "px";
+      el.style.zIndex = "9999";
+      el.style.pointerEvents = "none";
+      
+      container.appendChild(el);
+
+      var angle = Math.random() * Math.PI * 2;
+      var speed = Math.random() * 10 + 5;
+      var velocityX = Math.cos(angle) * speed;
+      var velocityY = Math.sin(angle) * speed - 3;
+      var gravity = 0.25;
+      var drag = 0.95;
+      var rotation = Math.random() * 360;
+      var rotationSpeed = (Math.random() - 0.5) * 12;
+      
+      (function(piece, vx, vy, rot, rotSp) {
+        var posX = x;
+        var posY = y;
+        var opacity = 1;
+
+        function update() {
+          vy += gravity;
+          vx *= drag;
+          vy *= drag;
+          posX += vx;
+          posY += vy;
+          rot += rotSp;
+          opacity -= 0.015;
+
+          piece.style.transform = "translate3d(" + (posX - x) + "px, " + (posY - y) + "px, 0) rotate(" + rot + "deg)";
+          piece.style.opacity = opacity;
+
+          if (opacity > 0) {
+            requestAnimationFrame(update);
+          } else {
+            piece.remove();
+          }
+        }
+        requestAnimationFrame(update);
+      })(el, velocityX, velocityY, rotation, rotationSpeed);
+    }
+  }
+
+  // Trigger burst Confetti on specific elements click
+  document.addEventListener("click", function (e) {
+    var target = e.target;
+    if (target.closest(".logo") || target.closest(".btn") || target.closest(".theme-btn") || target.closest(".mode-toggle") || target.closest(".contact-link") || target.closest(".project-card") || target.closest(".tl-card")) {
+      burstConfetti(e.clientX, e.clientY);
+    }
+  });
 
 })();

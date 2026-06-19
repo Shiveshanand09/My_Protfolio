@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shivesh Anand — AI/ML Engineer &amp; Data Scientist</title>
-<meta name="description" content="Portfolio of Shivesh Anand — AI/ML Engineer and Data Scientist building predictive models, RAG/LLM systems, and end-to-end data pipelines.">
+<title>Shivesh Anand — AI/ML Engineer, Data Scientist &amp; Data Analyst</title>
+<meta name="description" content="Portfolio of Shivesh Anand — AI/ML Engineer, Data Scientist and Data Analyst building predictive models, RAG/LLM systems, and end-to-end data pipelines.">
 <meta name="theme-color" content="#0A0D12">
 
-<meta property="og:title" content="Shivesh Anand — AI/ML Engineer & Data Scientist">
-<meta property="og:description" content="Predictive models, GenAI/RAG systems, and the data pipelines that feed them.">
+<meta property="og:title" content="Shivesh Anand — AI/ML Engineer, Data Scientist &amp; Data Analyst">
+<meta property="og:description" content="Predictive models, GenAI/RAG systems, and data analysis pipelines.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="assets/img/profile.jpg">
 
@@ -31,7 +31,54 @@
   <canvas id="particleCanvas"></canvas>
   <span class="blob blob-amber"></span>
   <span class="blob blob-teal"></span>
+  <span class="blob blob-coral"></span>
   <div class="bg-grid"></div>
+  
+  <!-- Jumping Robot -->
+  <div class="bg-robot">
+    <svg class="robot-svg" width="120" height="150" viewBox="0 0 120 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Thruster Flame -->
+      <path class="robot-flame" d="M60 102 L50 128 L60 142 L70 128 Z" fill="url(#flameGradient)" filter="url(#glow)"/>
+      
+      <!-- Torso -->
+      <rect class="robot-body" x="35" y="60" width="50" height="42" rx="10" fill="rgba(22, 27, 36, 0.85)" stroke="var(--teal)" stroke-width="2" />
+      <!-- Pulsing Core -->
+      <circle class="robot-core" cx="60" cy="81" r="7" fill="var(--amber)" filter="url(#glow)" />
+      
+      <!-- Head Connecter -->
+      <rect x="56" y="52" width="8" height="10" fill="var(--teal)" />
+      
+      <!-- Head -->
+      <rect class="robot-head" x="30" y="15" width="60" height="38" rx="12" fill="rgba(22, 27, 36, 0.85)" stroke="var(--teal)" stroke-width="2" />
+      <!-- Visor Scanning Eye -->
+      <rect class="robot-visor" x="38" y="27" width="44" height="10" rx="5" fill="#0A0D12" stroke="var(--teal)" stroke-width="1"/>
+      <line class="robot-eye" x1="42" y1="32" x2="52" y2="32" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" filter="url(#glow)" />
+      
+      <!-- Antennas -->
+      <line x1="60" y1="15" x2="60" y2="6" stroke="var(--teal)" stroke-width="2" />
+      <circle cx="60" cy="4" r="3" fill="var(--amber)" />
+      
+      <!-- Floating Ears -->
+      <rect class="robot-ear-l" x="24" y="26" width="6" height="16" rx="3" fill="var(--teal)" />
+      <rect class="robot-ear-r" x="90" y="26" width="6" height="16" rx="3" fill="var(--teal)" />
+      
+      <!-- Floating Hands -->
+      <circle class="robot-hand-l" cx="22" cy="81" r="5" fill="var(--teal)" filter="url(#glow)"/>
+      <circle class="robot-hand-r" cx="98" cy="81" r="5" fill="var(--teal)" filter="url(#glow)"/>
+      
+      <defs>
+        <linearGradient id="flameGradient" x1="60" y1="102" x2="60" y2="142" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="var(--amber)"/>
+          <stop offset="50%" stop-color="var(--coral)"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </linearGradient>
+        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+    </svg>
+  </div>
 </div>
 
 <!-- ===== NAV ===== -->
@@ -39,7 +86,6 @@
   <div class="nav-inner">
     <a href="#home" class="logo" aria-label="Shivesh Anand — home">
       <span class="logo-mark">SA</span>
-      <span class="logo-tag">v1.0</span>
     </a>
 
     <nav class="nav-links" id="navLinks" aria-label="Primary">
@@ -51,9 +97,16 @@
       <a href="#contact" data-nav>Contact</a>
     </nav>
 
+    <!-- theme mode toggle -->
+    <button class="mode-toggle" id="modeToggle" aria-label="Toggle theme mode" title="Cycle theme mode (Dark / Light / RGB)">
+      <svg class="mode-icon moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg class="mode-icon sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      <svg class="mode-icon rgb" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+    </button>
+
     <!-- theme switcher accent controls -->
     <div class="theme-switcher" id="themeSwitcher" aria-label="Select accent theme">
-      <button class="theme-btn active" data-theme="amber" style="--btn-color: #FFB454;" title="Amber Accent"></button>
+      <button class="theme-btn active" data-theme="cyberpunk" style="--btn-color: #FF2E93;" title="Cyberpunk Accent"></button>
       <button class="theme-btn" data-theme="teal" style="--btn-color: #4FD1C5;" title="Teal Accent"></button>
       <button class="theme-btn" data-theme="indigo" style="--btn-color: #818CF8;" title="Indigo Accent"></button>
       <button class="theme-btn" data-theme="emerald" style="--btn-color: #34D399;" title="Emerald Accent"></button>
@@ -79,12 +132,12 @@
       <div class="hero-copy">
         <p class="eyebrow reveal" data-reveal>
           <span class="status-dot"></span>
-          Open to AI/ML &amp; Data Science roles
+          Open to AI/ML, Data Science &amp; Data Analyst roles
         </p>
 
         <h1 class="hero-name reveal" data-reveal>
-          <span class="line">Shivesh</span>
-          <span class="line">Anand<span class="dot">.</span></span>
+          <span class="line gradient-text">Shivesh</span>
+          <span class="line"><span class="gradient-text">Anand</span><span class="dot">.</span></span>
         </h1>
 
         <p class="hero-role reveal" data-reveal>
@@ -92,8 +145,7 @@
         </p>
 
         <p class="hero-desc reveal" data-reveal>
-          I design and ship the pipelines, models, and retrieval systems that turn raw data
-          into decisions — from OCR document intake to production-ready ML APIs.
+          I analyze raw datasets, build predictive AI/ML models, and engineer end-to-end data science pipelines to turn complex information into measurable business decisions.
         </p>
 
         <div class="hero-cta reveal" data-reveal>
@@ -105,9 +157,9 @@
         </div>
 
         <div class="hero-meta reveal" data-reveal>
-          <a href="https://github.com/shiveshanand" target="_blank" rel="noopener">
+          <a href="https://github.com/shiveshanand09" target="_blank" rel="noopener">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.74.4-1.26.72-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.6.24 2.76.12 3.05.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.39-5.25 5.67.42.36.78 1.07.78 2.16v3.2c0 .31.21.65.79.55A10.52 10.52 0 0 0 23.5 12c0-6.27-5.23-11.5-11.5-11.5Z"/></svg>
-            <span>github.com/shiveshanand</span>
+            <span>github.com/shiveshanand09</span>
           </a>
           <a href="https://linkedin.com/in/shiveshanand" target="_blank" rel="noopener">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM3.56 20.45h3.56V9H3.56v11.45ZM22.22 0H1.77C.8 0 0 .78 0 1.75v20.5C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.75V1.75C24 .78 23.2 0 22.22 0Z"/></svg>
@@ -181,9 +233,9 @@
     <div class="section-inner about-grid">
       <div class="about-text">
         <p class="eyebrow reveal" data-reveal>// ABOUT</p>
-        <h2 class="section-title reveal" data-reveal>I like finishing what most people only prototype.</h2>
+        <h2 class="section-title reveal" data-reveal>I like <span class="gradient-text">finishing</span> what most people only prototype.</h2>
         <p class="about-body reveal" data-reveal>
-          I'm an AI/ML engineer and data scientist studying Computer Science with a focus on AI
+          I'm an AI/ML engineer, data scientist, and data analyst studying Computer Science with a focus on AI
           &amp; Data Science at MIT World Peace University. Over two internships, I've built feature
           pipelines that feed real models, an OCR system that reads documents more accurately than
           the process it replaced, and a retrieval pipeline that lets you ask a document collection
@@ -198,17 +250,17 @@
       </div>
 
       <div class="stats reveal" data-reveal>
-        <div class="stat" data-target="20" data-suffix="%">
+        <div class="stat" data-target="35" data-suffix="%">
           <div class="stat-number" data-count>0%</div>
-          <p class="stat-label">Fewer delivery delays — clustering &amp; regression for shipment optimisation</p>
-        </div>
-        <div class="stat" data-target="25" data-suffix="%">
-          <div class="stat-number" data-count>0%</div>
-          <p class="stat-label">Higher extraction accuracy — OCR-based document intelligence pipeline</p>
+          <p class="stat-label">Fewer downstream errors — structured data validation &amp; cleaning workflows</p>
         </div>
         <div class="stat" data-target="30" data-suffix="%">
           <div class="stat-number" data-count>0%</div>
-          <p class="stat-label">Less manual effort — automated data pipelines for EDA &amp; validation</p>
+          <p class="stat-label">Less manual processing time — automated Python pipelines &amp; data extraction</p>
+        </div>
+        <div class="stat" data-target="20" data-suffix="+">
+          <div class="stat-number" data-count>0+</div>
+          <p class="stat-label">Power BI DAX measures — dynamic dashboards tracking KPIs across business units</p>
         </div>
         <div class="stat" data-target="7.54" data-suffix="/10" data-decimals="2">
           <div class="stat-number" data-count>0</div>
@@ -222,7 +274,7 @@
   <section class="section" id="experience">
     <div class="section-inner">
       <p class="eyebrow reveal" data-reveal>// EXPERIENCE</p>
-      <h2 class="section-title reveal" data-reveal>Where I've shipped this</h2>
+      <h2 class="section-title reveal" data-reveal>Where I've <span class="gradient-text">shipped</span> this</h2>
 
       <div class="timeline">
         <article class="tl-item reveal" data-reveal>
@@ -230,22 +282,21 @@
           <div class="tl-card">
             <div class="tl-head">
               <div>
-                <h3>AI/ML Intern</h3>
-                <p class="tl-org">eSparse Matrix Solutions Pvt. Ltd. · Pune, India</p>
+                <h3>Data Analyst Intern</h3>
+                <p class="tl-org">eSparse Matrix Solutions Pvt. Ltd. · Pune, India (Remote)</p>
               </div>
-              <span class="tl-date">Dec 2025 – May 2026</span>
+              <span class="tl-date">Nov 2025 – Apr 2026</span>
             </div>
             <div class="tag-row">
               <span class="tag tag-stage">INGEST</span>
               <span class="tag tag-stage">ENGINEER</span>
-              <span class="tag tag-stage">MODEL</span>
-              <span class="tag tag-stage">DEPLOY</span>
+              <span class="tag tag-stage">DECIDE</span>
             </div>
             <ul class="tl-list">
-              <li>Built feature engineering pipelines and ML models for predictive analytics and forecasting; deployed models via Flask REST APIs for real-time inference.</li>
-              <li>Developed a shipment optimisation solution using clustering and regression, cutting delivery delays by 20%.</li>
-              <li>Designed an OCR-based intelligent document processing pipeline, lifting extraction accuracy by 25%.</li>
-              <li>Ran data validation, preprocessing, model evaluation, and error analysis to improve prediction performance.</li>
+              <li>Built multi-page Power BI dashboards with 20+ DAX measures and dynamic slicers to track KPIs across business units, giving management a consolidation of performance data.</li>
+              <li>Designed and maintained Python and SQL ETL pipelines processing business datasets weekly; trend findings shaped quarterly planning decisions for leadership.</li>
+              <li>Introduced structured data validation and data cleaning steps across reporting workflows, reducing downstream errors by 35% and improving reliability of stakeholder-facing reports.</li>
+              <li>Turned complex data into actionable stories — presented pipeline improvements and insights to non-technical stakeholders, influencing feature prioritization on the product roadmap.</li>
             </ul>
           </div>
         </article>
@@ -255,10 +306,10 @@
           <div class="tl-card">
             <div class="tl-head">
               <div>
-                <h3>Data Scientist Intern</h3>
+                <h3>Data Analyst Intern</h3>
                 <p class="tl-org">Geeky Vision · Remote</p>
               </div>
-              <span class="tl-date">June 2025 – Nov 2025</span>
+              <span class="tl-date">Apr 2025 – Sep 2025</span>
             </div>
             <div class="tag-row">
               <span class="tag tag-stage">INGEST</span>
@@ -266,8 +317,9 @@
               <span class="tag tag-stage">DECIDE</span>
             </div>
             <ul class="tl-list">
-              <li>Built automated data pipelines that cut manual effort by 30%; ran EDA, feature engineering, and data validation in Python and SQL.</li>
-              <li>Developed Power BI dashboards and KPI reporting systems supporting data-driven decisions across the team.</li>
+              <li>Automated repetitive data extraction and transformation tasks using Python scripts, cutting manual processing time by 30%; documentation became team onboarding material.</li>
+              <li>Developed Power BI and Tableau dashboards that non-technical stakeholders used daily to monitor KPIs and drive data-driven decision-making without needing analyst support.</li>
+              <li>Defined a repeatable data QA checklist adopted as team standard, ensuring consistency across all datasets and keeping outputs audit-ready.</li>
             </ul>
           </div>
         </article>
@@ -279,9 +331,21 @@
   <section class="section" id="projects">
     <div class="section-inner">
       <p class="eyebrow reveal" data-reveal>// PROJECTS</p>
-      <h2 class="section-title reveal" data-reveal>Selected builds</h2>
+      <h2 class="section-title reveal" data-reveal>Selected <span class="gradient-text">builds</span></h2>
 
       <div class="project-grid">
+
+        <article class="project-card reveal" data-reveal>
+          <div class="project-top">
+            <span class="tag tag-stage">ENGINEER → DECIDE</span>
+          </div>
+          <h3>Autonomous AI Data Analyst (Antigravity Agent)</h3>
+          <p>An intelligent agent designed to automate end-to-end data analysis workflows. Ingests tabular datasets (CSV/SQL), automatically executes code to clean data, perform EDA, and generate dynamic visual dashboards on demand.</p>
+          <div class="tag-row">
+            <span class="tag">Python</span><span class="tag">LangChain</span><span class="tag">LLMs</span>
+            <span class="tag">Pandas</span><span class="tag">Streamlit</span><span class="tag">Data Analysis</span>
+          </div>
+        </article>
 
         <article class="project-card reveal" data-reveal>
           <div class="project-top">
@@ -345,7 +409,7 @@
   <section class="section" id="skills">
     <div class="section-inner">
       <p class="eyebrow reveal" data-reveal>// STACK</p>
-      <h2 class="section-title reveal" data-reveal>Tools of the trade</h2>
+      <h2 class="section-title reveal" data-reveal>Tools of the <span class="gradient-text">trade</span></h2>
 
       <div class="skills-grid">
         <div class="skill-group reveal" data-reveal>
@@ -393,6 +457,14 @@
             <span class="tag">Dashboard Development</span><span class="tag">Business Analytics</span><span class="tag">Data Visualisation</span>
           </div>
         </div>
+        <div class="skill-group reveal" data-reveal>
+          <p class="skill-head"># Data Analytics &amp; BI</p>
+          <div class="tag-row">
+            <span class="tag">SQL (Window Functions, CTEs)</span><span class="tag">Excel (VBA &amp; Macros)</span>
+            <span class="tag">A/B Testing</span><span class="tag">Statistical Inference</span><span class="tag">Power BI (DAX)</span>
+            <span class="tag">Tableau</span><span class="tag">Data Wrangling</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -402,7 +474,7 @@
     <div class="section-inner edu-grid">
       <div>
         <p class="eyebrow reveal" data-reveal>// EDUCATION</p>
-        <h2 class="section-title reveal" data-reveal>Foundations</h2>
+        <h2 class="section-title reveal" data-reveal>Academic <span class="gradient-text">Foundations</span></h2>
         <div class="edu-card reveal" data-reveal>
           <div class="tl-head">
             <div>
@@ -417,15 +489,15 @@
 
       <div>
         <p class="eyebrow reveal" data-reveal>// CERTIFICATIONS</p>
-        <h2 class="section-title reveal" data-reveal>Keeping current</h2>
+        <h2 class="section-title reveal" data-reveal>Keeping <span class="gradient-text">current</span></h2>
         <ul class="cert-list">
           <li class="cert-item reveal" data-reveal>
             <span class="cert-badge" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M9.5 13.5 7 22l5-3 5 3-2.5-8.5"/></svg>
             </span>
             <span>
-              <strong>National Academic Immersion Program on AI</strong>
-              <span class="cert-issuer">IIT Jodhpur — Technology Innovation &amp; Startup Center</span>
+              <strong>Microsoft Certified: Power BI Data Analyst Associate (PL-300)</strong>
+              <span class="cert-issuer">Microsoft · 2025</span>
             </span>
           </li>
           <li class="cert-item reveal" data-reveal>
@@ -433,8 +505,8 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M9.5 13.5 7 22l5-3 5 3-2.5-8.5"/></svg>
             </span>
             <span>
-              <strong>Generative AI in Action</strong>
-              <span class="cert-issuer">IBM</span>
+              <strong>Google Data Analytics Professional Certificate</strong>
+              <span class="cert-issuer">Google / Coursera · 2025</span>
             </span>
           </li>
           <li class="cert-item reveal" data-reveal>
@@ -442,8 +514,53 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M9.5 13.5 7 22l5-3 5 3-2.5-8.5"/></svg>
             </span>
             <span>
-              <strong>Artificial Intelligence Fundamentals</strong>
-              <span class="cert-issuer">IBM</span>
+              <strong>IBM: Generative AI in Action | AI Fundamentals</strong>
+              <span class="cert-issuer">IBM · 2024</span>
+            </span>
+          </li>
+          <li class="cert-item reveal" data-reveal>
+            <span class="cert-badge" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M9.5 13.5 7 22l5-3 5 3-2.5-8.5"/></svg>
+            </span>
+            <span>
+              <strong>Microsoft Copilot for Security</strong>
+              <span class="cert-issuer">Microsoft · 2024</span>
+            </span>
+          </li>
+          <li class="cert-item reveal" data-reveal>
+            <span class="cert-badge" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M9.5 13.5 7 22l5-3 5 3-2.5-8.5"/></svg>
+            </span>
+            <span>
+              <strong>Deloitte Australia: Data Analytics Job Simulation</strong>
+              <span class="cert-issuer">Deloitte / Forage · 2024</span>
+            </span>
+          </li>
+          <li class="cert-item reveal" data-reveal>
+            <span class="cert-badge" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M9.5 13.5 7 22l5-3 5 3-2.5-8.5"/></svg>
+            </span>
+            <span>
+              <strong>NAIP: Machine Learning</strong>
+              <span class="cert-issuer">IIT Jodhpur — Technology Innovation &amp; Startup Center · 2023</span>
+            </span>
+          </li>
+          <li class="cert-item reveal" data-reveal>
+            <span class="cert-badge" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M9.5 13.5 7 22l5-3 5 3-2.5-8.5"/></svg>
+            </span>
+            <span>
+              <strong>Smart India Hackathon (SIH) — National Winner</strong>
+              <span class="cert-issuer">Delivered a data-driven ML product selected among top national solutions · 2023</span>
+            </span>
+          </li>
+          <li class="cert-item reveal" data-reveal>
+            <span class="cert-badge" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M9.5 13.5 7 22l5-3 5 3-2.5-8.5"/></svg>
+            </span>
+            <span>
+              <strong>Codegoda 2022 — National Programming Competition</strong>
+              <span class="cert-issuer">Participant · 2022</span>
             </span>
           </li>
         </ul>
@@ -455,13 +572,19 @@
   <section class="section section-contact" id="contact">
     <div class="section-inner contact-inner">
       <p class="eyebrow reveal" data-reveal>// 06 · CONNECT</p>
-      <h2 class="contact-title reveal" data-reveal>Let's build something<br>that ships.</h2>
+      <h2 class="contact-title reveal" data-reveal>Let's build something<br>that <span class="gradient-text">ships</span>.</h2>
       <p class="contact-sub reveal" data-reveal>
         Open to AI/ML engineering and data science roles, internships, and interesting
         collaborations. The fastest way to reach me is email.
       </p>
 
       <div class="contact-grid reveal" data-reveal>
+        <a class="contact-link contact-featured" href="assets/resume/Shivesh-Anand-Resume.pdf" download>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Download résumé (PDF)</span>
+          <span class="copy-hint">Get</span>
+        </a>
+
         <button class="contact-link" data-copy="shiveshanand8742@gmail.com" type="button">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
           <span>shiveshanand8742@gmail.com</span>
@@ -480,22 +603,16 @@
           <span class="copy-hint">Open</span>
         </a>
 
-        <a class="contact-link" href="https://github.com/shiveshanand" target="_blank" rel="noopener">
+        <a class="contact-link" href="https://github.com/shiveshanand09" target="_blank" rel="noopener">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.74.4-1.26.72-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.6.24 2.76.12 3.05.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.39-5.25 5.67.42.36.78 1.07.78 2.16v3.2c0 .31.21.65.79.55A10.52 10.52 0 0 0 23.5 12c0-6.27-5.23-11.5-11.5-11.5Z"/></svg>
-          <span>github.com/shiveshanand</span>
+          <span>github.com/shiveshanand09</span>
           <span class="copy-hint">Open</span>
         </a>
 
-        <div class="contact-link contact-static">
+        <div class="contact-link contact-static contact-full">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
           <span>Bangalore, India</span>
         </div>
-
-        <a class="contact-link" href="assets/resume/Shivesh-Anand-Resume.pdf" download>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span>Download résumé (PDF)</span>
-          <span class="copy-hint">Get</span>
-        </a>
       </div>
     </div>
   </section>
