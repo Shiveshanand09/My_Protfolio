@@ -82,7 +82,7 @@
 
   /* ---------- HERO TYPED TEXT ---------- */
   var typedEl = document.getElementById("typed");
-  var roles = ["AI/ML Engineer", "Data Scientist", "Data Analyst", "RAG & LLM Builder", "Data Pipeline Engineer"];
+  var roles = ["Product Support Analyst", "AI/ML Engineer", "Data Scientist", "Data Analyst", "RAG & LLM Builder", "Data Pipeline Engineer"];
 
   if (typedEl) {
     if (reduceMotion) {
@@ -207,10 +207,10 @@
     var themeBtns = themeSwitcher.querySelectorAll(".theme-btn");
     
     // Load persisted theme
-    var savedTheme = localStorage.getItem("portfolioAccentTheme") || "cyberpunk";
-    if (savedTheme === "amber") {
-      savedTheme = "cyberpunk";
-      localStorage.setItem("portfolioAccentTheme", "cyberpunk");
+    var savedTheme = localStorage.getItem("portfolioAccentTheme") || "aesthetic";
+    if (savedTheme === "amber" || savedTheme === "cyberpunk" || savedTheme === "crimson") {
+      savedTheme = "aesthetic";
+      localStorage.setItem("portfolioAccentTheme", "aesthetic");
     }
     setActiveTheme(savedTheme);
 
