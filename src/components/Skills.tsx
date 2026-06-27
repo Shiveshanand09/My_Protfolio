@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Code, Database, Brain, Cpu, BarChart3, Settings } from "lucide-react";
+import { Code, Database, Brain, Cpu, BarChart3, Settings, Wrench } from "lucide-react";
 
 export default function Skills() {
   const skillCategories = [
@@ -8,6 +8,11 @@ export default function Skills() {
       title: "Programming & Dev",
       icon: <Code className="text-cyan-400" size={20} />,
       skills: ["Python", "SQL (CTEs, Window Functions)", "Flask", "REST APIs", "Git & Version Control"],
+    },
+    {
+      title: "Enterprise Support & Diagnostics",
+      icon: <Wrench className="text-pink-400" size={20} />,
+      skills: ["Enterprise Systems Support", "Technical Troubleshooting", "SQL Query Optimization", "Application Log Diagnostics", "Integration Debugging", "Defect Analysis"],
     },
     {
       title: "Data Science & Engineering",
@@ -31,7 +36,7 @@ export default function Skills() {
     },
     {
       title: "Analytics & Visualisation",
-      icon: <BarChart3 className="text-pink-400" size={20} />,
+      icon: <BarChart3 className="text-cyan-400" size={20} />,
       skills: ["Power BI (DAX)", "Tableau", "Excel (VBA & Macros)", "A/B Testing", "KPI Analysis", "Executive Dashboard Reporting", "Data Wrangling"],
     },
   ];

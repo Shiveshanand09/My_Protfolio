@@ -1,68 +1,200 @@
 "use client";
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import * as THREE from "three";
 
-function ParticleCore() {
+function BackgroundStars() {
   const pointsRef = useRef<THREE.Points>(null);
   
-  const [positions, colors] = useMemo(() => {
-    const count = 1800;
+  const [positions] = useMemo(() => {
+    const count = 300;
     const pos = new Float32Array(count * 3);
-    const cols = new Float32Array(count * 3);
-    const colorsList = [
-      new THREE.Color("#00f0ff"), // Neon Cyan
-      new THREE.Color("#bd00ff"), // Neon Purple
-      new THREE.Color("#ff007a"), // Neon Pink
-    ];
-
     for (let i = 0; i < count; i++) {
-      // Golden ratio distribution to map particles onto a sphere
-      const phi = Math.acos(-1 + (2 * i) / count);
-      const theta = Math.sqrt(count * Math.PI) * phi;
-      
-      // Add minor random variance to radial distance for shell depth
-      const radius = 2.0 + Math.random() * 0.4;
-
-      const x = radius * Math.cos(theta) * Math.sin(phi);
-      const y = radius * Math.sin(theta) * Math.sin(phi);
-      const z = radius * Math.cos(phi);
-
-      pos[i * 3] = x;
-      pos[i * 3 + 1] = y;
-      pos[i * 3 + 2] = z;
-
-      // Cycle colors to get a blended gradient look
-      const col = colorsList[i % 3];
-      cols[i * 3] = col.r;
-      cols[i * 3 + 1] = col.g;
-      cols[i * 3 + 2] = col.b;
+      pos[i * 3] = (Math.random() - 0.5) * 15;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 15;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 10 - 2;
     }
-    return [pos, cols];
+    return [pos];
   }, []);
 
   useFrame((state) => {
     if (!pointsRef.current) return;
-    const time = state.clock.getElapsedTime();
-    
-    // Slow cinematic rotation
-    pointsRef.current.rotation.y = time * 0.06;
-    pointsRef.current.rotation.x = time * 0.03;
+    pointsRef.current.rotation.y = state.clock.getElapsedTime() * 0.02;
   });
 
   return (
-    <group>
-      <Points ref={pointsRef} positions={positions} colors={colors} stride={3}>
-        <PointMaterial
-          transparent
-          vertexColors
-          size={0.05}
-          sizeAttenuation={true}
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-        />
-      </Points>
+    <Points ref={pointsRef} positions={positions} stride={3}>
+      <PointMaterial
+        transparent
+        color="#00f0ff"
+        size={0.03}
+        sizeAttenuation={true}
+        depthWrite={false}
+        opacity={0.3}
+      />
+    </Points>
+  );
+}
+
+function CyberRobot() {
+  const robotRef = useRef<THREE.Group>(null);
+  const headRef = useRef<THREE.Group>(null);
+  const coreRef = useRef<THREE.Mesh>(null);
+  const leftArmRef = useRef<THREE.Group>(null);
+  const rightArmRef = useRef<THREE.Group>(null);
+
+  const mouse = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    
+    // Idle bobbing & breathing
+    if (robotRef.current) {
+      robotRef.current.position.y = -0.5 + Math.sin(time * 1.5) * 0.12;
+      robotRef.current.rotation.y = time * 0.15; // Slow continuous rotate
+    }
+
+    // Head tracks cursor
+    if (headRef.current) {
+      headRef.current.rotation.y = THREE.MathUtils.lerp(headRef.current.rotation.y, mouse.current.x * 0.4, 0.08);
+      headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, mouse.current.y * 0.25, 0.08);
+    }
+
+    // Pulsing core heart
+    if (coreRef.current) {
+      const scale = 1.0 + Math.sin(time * 4.5) * 0.1;
+      coreRef.current.scale.set(scale, scale, scale);
+      if (coreRef.current.material) {
+        (coreRef.current.material as THREE.MeshStandardMaterial).emissiveIntensity = 1.2 + Math.sin(time * 4.5) * 0.6;
+      }
+    }
+
+    // Arm idle sway
+    if (leftArmRef.current) {
+      leftArmRef.current.rotation.z = Math.sin(time * 1.5) * 0.04 - 0.15;
+    }
+    if (rightArmRef.current) {
+      rightArmRef.current.rotation.z = -Math.sin(time * 1.5) * 0.04 + 0.15;
+    }
+  });
+
+  return (
+    <group ref={robotRef} position={[0, -0.5, 0]}>
+      {/* 1. Head Group */}
+      <group ref={headRef} position={[0, 1.4, 0]}>
+        {/* Head Shell */}
+        <mesh>
+          <boxGeometry args={[0.65, 0.65, 0.65]} />
+          <meshStandardMaterial color="#1a1a24" roughness={0.15} metalness={0.8} />
+        </mesh>
+        
+        {/* Visor / Laser Eye Line */}
+        <mesh position={[0, 0.08, 0.33]}>
+          <boxGeometry args={[0.48, 0.1, 0.05]} />
+          <meshStandardMaterial color="#ff007a" emissive="#ff007a" emissiveIntensity={3} toneMapped={false} />
+        </mesh>
+
+        {/* Head Antenna */}
+        <mesh position={[0, 0.42, 0]}>
+          <cylinderGeometry args={[0.015, 0.015, 0.18, 8]} />
+          <meshStandardMaterial color="#00f0ff" />
+        </mesh>
+        <mesh position={[0, 0.52, 0]}>
+          <sphereGeometry args={[0.04, 16, 16]} />
+          <meshStandardMaterial color="#00f0ff" emissive="#00f0ff" emissiveIntensity={1.5} />
+        </mesh>
+
+        {/* Neck Column */}
+        <mesh position={[0, -0.38, 0]}>
+          <cylinderGeometry args={[0.12, 0.12, 0.16, 16]} />
+          <meshStandardMaterial color="#0b0b0f" roughness={0.5} metalness={0.9} />
+        </mesh>
+      </group>
+
+      {/* 2. Torso Group */}
+      <group position={[0, 0.4, 0]}>
+        {/* Chest Armor Plate */}
+        <mesh>
+          <boxGeometry args={[1.05, 1.35, 0.75]} />
+          <meshStandardMaterial color="#111118" roughness={0.2} metalness={0.95} />
+        </mesh>
+
+        {/* Reactor Core Heart */}
+        <mesh ref={coreRef} position={[0, 0.15, 0.38]}>
+          <sphereGeometry args={[0.16, 32, 32]} />
+          <meshStandardMaterial color="#00f0ff" emissive="#00f0ff" emissiveIntensity={1.8} toneMapped={false} />
+        </mesh>
+
+        {/* Core Torus Ring */}
+        <mesh position={[0, 0.15, 0.37]}>
+          <torusGeometry args={[0.2, 0.025, 8, 32]} />
+          <meshStandardMaterial color="#1e1e2d" metalness={0.9} />
+        </mesh>
+      </group>
+
+      {/* 3. Left Arm Group */}
+      <group ref={leftArmRef} position={[-0.65, 0.9, 0]}>
+        {/* Shoulder Joint Ball */}
+        <mesh>
+          <sphereGeometry args={[0.16, 16, 16]} />
+          <meshStandardMaterial color="#bd00ff" emissive="#bd00ff" emissiveIntensity={0.3} metalness={0.9} />
+        </mesh>
+        {/* Upper Arm Cylinder */}
+        <mesh position={[-0.1, -0.38, 0]} rotation={[0, 0, 0.1]}>
+          <cylinderGeometry args={[0.09, 0.07, 0.65, 16]} />
+          <meshStandardMaterial color="#111118" metalness={0.8} />
+        </mesh>
+        {/* Elbow Joint Ball */}
+        <mesh position={[-0.1, -0.75, 0]}>
+          <sphereGeometry args={[0.11, 16, 16]} />
+          <meshStandardMaterial color="#00f0ff" metalness={0.9} />
+        </mesh>
+        {/* Lower Arm Cylinder */}
+        <mesh position={[-0.1, -1.1, 0]} rotation={[0, 0, 0.05]}>
+          <cylinderGeometry args={[0.07, 0.05, 0.55, 16]} />
+          <meshStandardMaterial color="#1a1a24" metalness={0.8} />
+        </mesh>
+      </group>
+
+      {/* 4. Right Arm Group */}
+      <group ref={rightArmRef} position={[0.7, 0.9, 0]}>
+        {/* Shoulder Joint Ball */}
+        <mesh>
+          <sphereGeometry args={[0.16, 16, 16]} />
+          <meshStandardMaterial color="#bd00ff" emissive="#bd00ff" emissiveIntensity={0.3} metalness={0.9} />
+        </mesh>
+        {/* Upper Arm Cylinder */}
+        <mesh position={[0.1, -0.38, 0]} rotation={[0, 0, -0.1]}>
+          <cylinderGeometry args={[0.09, 0.07, 0.65, 16]} />
+          <meshStandardMaterial color="#111118" metalness={0.8} />
+        </mesh>
+        {/* Elbow Joint Ball */}
+        <mesh position={[0.1, -0.75, 0]}>
+          <sphereGeometry args={[0.11, 16, 16]} />
+          <meshStandardMaterial color="#00f0ff" metalness={0.9} />
+        </mesh>
+        {/* Lower Arm Cylinder */}
+        <mesh position={[0.1, -1.1, 0]} rotation={[0, 0, -0.05]}>
+          <cylinderGeometry args={[0.07, 0.05, 0.55, 16]} />
+          <meshStandardMaterial color="#1a1a24" metalness={0.8} />
+        </mesh>
+      </group>
+
+      {/* 5. Pelvis Hip Base connection */}
+      <mesh position={[0, -0.38, 0]}>
+        <cylinderGeometry args={[0.38, 0.28, 0.28, 16]} />
+        <meshStandardMaterial color="#0b0b0f" roughness={0.4} metalness={0.9} />
+      </mesh>
     </group>
   );
 }
@@ -111,7 +243,8 @@ export default function ThreeCanvas() {
         <ambientLight intensity={0.4} />
         <pointLight position={[8, 8, 8]} intensity={1.5} color="#00f0ff" />
         <pointLight position={[-8, -8, -8]} intensity={0.8} color="#ff007a" />
-        <ParticleCore />
+        <CyberRobot />
+        <BackgroundStars />
         <OrbitalRings />
       </Canvas>
     </div>
